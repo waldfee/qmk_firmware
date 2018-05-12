@@ -64,20 +64,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Lower
  * ,---------------------------------------------------------------------------------------------.
- * |   ~       |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  | Bksp      |
+ * |   ~       |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  | Home | Pg Up| Bksp      |
  * |-----------+------+------+------+------+-------------+------+------+------+------+-----------|
- * | Del       |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   _  |   +  |   {  |   }  |  |        |
+ * | Del       |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   _  |   +  | End  | Pg Dn|           |
  * |-----------+------+------+------+------+------|------+------+------+------+------+-----------|
- * | Shift / { |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |ISO ~ |ISO | | Home | End  | Shift / } |
+ * | Shift / { |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |ISO ~ |ISO | |      |      | Shift / } |
  * |-----------+------+------+------+------+------+------+------+------+------+------+-----------|
- * |           |      |      |      |      |             |      | Next | Vol- | Vol+ | Play      |
+ * |           |      |  App |      |      |             |      | Next | Vol- | Vol+ | Play      |
  * `---------------------------------------------------------------------------------------------'
  */
 [_LOWER] = {
-  {KC_TILD,   KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN, KC_RPRN, KC_BSPC   },
-  {KC_DEL,    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_UNDS,    KC_PLUS,    KC_LCBR, KC_RCBR, KC_PIPE   },
-  {LSFT_LCBR, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  S(KC_NUHS), S(KC_NUBS), KC_HOME, KC_END,  RSFT_RCBR },
-  {_______,   _______, _______, _______, _______, _______, _______, _______,    KC_MNXT,    KC_VOLD, KC_VOLU, KC_MPLY   }
+  {KC_TILD,   KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_HOME, KC_PGUP, KC_BSPC   },
+  {KC_DEL,    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_UNDS,    KC_PLUS,    KC_END , KC_PGDN, _______   },
+  {LSFT_LCBR, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  S(KC_NUHS), S(KC_NUBS), _______, _______,  RSFT_RCBR },
+  {_______,   _______, KC_APP, _______, _______, _______, _______, _______,    KC_MNXT,    KC_VOLD, KC_VOLU, KC_MPLY   }
 },
 
 /* Raise
@@ -100,78 +100,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Adjust (Lower + Raise)
  * ,-----------------------------------------------------------------------------------.
- * |      | Reset|      |      |      |      |      |      |      |      |      |  Del |
+ * |      |      |      |      |      |      |      |   Ü  |      |   Ö  |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |Aud on|Audoff|AGnorm|AGswap|      |      |      |      |      |
+ * |      |   Ä  |   ß  |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|      |      |      |      |      |
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = {
-  {_______, RESET,   DEBUG,    RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_DEL },
-  {_______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______,  _______, _______,  _______,  _______},
-  {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  TERM_ON, TERM_OFF, _______, _______, _______},
+  {_______, _______, _______, _______, _______, _______, _______,  DE_UE , _______,  DE_OE , _______, _______},
+  {_______,  DE_AE ,  DE_SS , _______, _______, _______, _______, _______, _______, _______, _______, _______},
+  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 }
 };
 
 uint32_t layer_state_set_user(uint32_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-}
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  bool is_shift_active = (keyboard_report->mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)));
-  bool is_altgr_active = (keyboard_report->mods & MOD_BIT(KC_RALT));
-  
-  if (is_altgr_active) {
-	  switch (keycode) {
-		  
-		case DE_O:
-		  if (record->event.pressed) {
-			if (is_shift_active) {
-				SEND_STRING(SS_LSFT(SS_TAP(X_SCOLON))); // Ö
-			}
-			else {
-				SEND_STRING(SS_TAP(X_SCOLON)); // ö			
-			}
-		  }
-		  return false;
-		  break;
-		  
-		case DE_A:
-		  if (record->event.pressed) {
-			if (is_shift_active) {
-				SEND_STRING(SS_LSFT(SS_TAP(X_QUOTE))); // Ä
-			}
-			else {
-				SEND_STRING(SS_TAP(X_QUOTE)); // ä			
-			}
-		  }
-		  return false;
-		  break;
-		  
-		case DE_U:
-		  if (record->event.pressed) {
-			if (is_shift_active) {
-				SEND_STRING(SS_LSFT(SS_TAP(X_LBRACKET))); // Ü
-			}
-			else {
-				SEND_STRING(SS_TAP(X_LBRACKET)); // ü			
-			}
-		  }
-		  return false;
-		  break;
-		  
-		case DE_S:
-		  if (record->event.pressed) {
-		    SEND_STRING(SS_TAP(X_MINUS)); // ß
-		  }
-		  return false;
-		  break;
-	}
-  }
-  
-  return true;
 }
