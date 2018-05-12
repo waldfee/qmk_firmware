@@ -16,6 +16,7 @@
 
 #include "planck.h"
 #include "action_layer.h"
+#include "keymap_german.h"
 
 extern keymap_config_t keymap_config;
 
@@ -114,61 +115,63 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  TERM_ON, TERM_OFF, _______, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 }
+};
 
 uint32_t layer_state_set_user(uint32_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-	  
-    case DE_ALGR(DE_O):
-      if (record->event.pressed) {
-        SEND_STRING(SS_TAP(X_SCLN)) // ö
-      }
-      return false;
-      break;
-	case KC_LSFT(DE_ALGR(DE_O)):
-      if (record->event.pressed) {
-        SEND_STRING(SS_LSFT(X_SCLN)) // Ö
-      }
-      return false;
-      break;
-	  
-	case DE_ALGR(DE_A):
-      if (record->event.pressed) {
-        SEND_STRING(SS_TAP(X_QUOT)) // ä
-      }
-      return false;
-      break;
-	case KC_LSFT(DE_ALGR(DE_A)):
-      if (record->event.pressed) {
-        SEND_STRING(SS_LSFT(X_QUOT)) // Ä
-      }
-      return false;
-      break;
-	  
-	case DE_ALGR(DE_U):
-      if (record->event.pressed) {
-        SEND_STRING(SS_TAP(X_LBRC)) // ü
-      }
-      return false;
-      break;
-	case KC_LSFT(DE_ALGR(DE_U)):
-      if (record->event.pressed) {
-        SEND_STRING(SS_LSFT(X_LBRC)) // Ü
-      }
-      return false;
-      break;
-	  
-	case DE_ALGR(DE_S):
-      if (record->event.pressed) {
-        SEND_STRING(SS_TAP(X_MINS)) // ß
-      }
-      return false;
-      break;
-
+  bool is_shift_active = (keyboard_report->mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)));
+  bool is_altgr_active = (keyboard_report->mods & MOD_BIT(KC_RALT));
+  
+  if (is_altgr_active) {
+	  switch (keycode) {
+		  
+		case DE_O:
+		  if (record->event.pressed) {
+			if (is_shift_active) {
+				SEND_STRING(SS_LSFT(SS_TAP(X_SCOLON))); // Ö
+			}
+			else {
+				SEND_STRING(SS_TAP(X_SCOLON)); // ö			
+			}
+		  }
+		  return false;
+		  break;
+		  
+		case DE_A:
+		  if (record->event.pressed) {
+			if (is_shift_active) {
+				SEND_STRING(SS_LSFT(SS_TAP(X_QUOTE))); // Ä
+			}
+			else {
+				SEND_STRING(SS_TAP(X_QUOTE)); // ä			
+			}
+		  }
+		  return false;
+		  break;
+		  
+		case DE_U:
+		  if (record->event.pressed) {
+			if (is_shift_active) {
+				SEND_STRING(SS_LSFT(SS_TAP(X_LBRACKET))); // Ü
+			}
+			else {
+				SEND_STRING(SS_TAP(X_LBRACKET)); // ü			
+			}
+		  }
+		  return false;
+		  break;
+		  
+		case DE_S:
+		  if (record->event.pressed) {
+		    SEND_STRING(SS_TAP(X_MINUS)); // ß
+		  }
+		  return false;
+		  break;
+	}
+  }
+  
   return true;
 }
-
-};
