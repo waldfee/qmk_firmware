@@ -147,17 +147,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	  
     if (is_lalt_active) {
       if (record->event.pressed) {
-          layer_on(_NUMPAD)
+          layer_on(_NUMPAD);
       }
       else {
-         layer_off(_NUMPAD)
+         layer_off(_NUMPAD);
       }
      
       return false;
     }
   }
   
-  return process_record_keymap(keycode, record);
+  return true;
 }
 
 
