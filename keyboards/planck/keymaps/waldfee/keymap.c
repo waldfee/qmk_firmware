@@ -24,7 +24,7 @@ enum planck_layers {
   _QWERTZ,
   _LOWER,
   _RAISE,
-  _ADJUST,
+  _UMLAUT,
   _NUMPAD
 };
 
@@ -99,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,   _______, KC_APP,  _______, _______, _______, _______, _______, _______, _______, DE_ACUT, _______   
 ),
 
-/* Adjust (Lower + Raise)
+/* Umlaut (Lower + Raise)
  * ,-----------------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |   Ü  |      |    Ö   |        |        |
  * |------+------+------+------+------+-------------+------+------+--------+--------+--------|
@@ -110,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |             |      |      | Mouse← | Mouse↓ | Mouse→ |
  * `-----------------------------------------------------------------------------------------'
  */
-[_ADJUST] = LAYOUT_planck_grid(
+[_UMLAUT] = LAYOUT_planck_grid(
   _______, _______, _______, _______, _______, _______, _______, DE_UE,   _______, DE_OE,      _______,    _______    ,
   _______, DE_AE,   DE_SS,   _______, _______, _______, _______, _______, _______, _______,    _______,    _______    ,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_MS_BTN1, KC_MS_UP,   KC_MS_BTN2 ,
@@ -137,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 uint32_t layer_state_set_user(uint32_t state) {
-  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+  return update_tri_layer_state(state, _LOWER, _RAISE, _UMLAUT);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
