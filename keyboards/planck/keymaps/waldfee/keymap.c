@@ -20,12 +20,17 @@
 
 extern keymap_config_t keymap_config;
 
+static bool reset_is_lalt_pressed;
+static bool reset_is_ralt_pressed;
+static bool reset_is_tab_pressed;
+
 enum planck_layers {
   _QWERTZ,
   _LOWER,
   _RAISE,
   _UMLAUT,
-  _NUMPAD
+  _NUMPAD,
+  _RESET
 };
 
 #define _______ KC_TRNS
@@ -133,7 +138,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, DE_4, DE_5,    DE_6,    DE_MINS, _______, _______, _______,
   _______, _______, _______, _______, _______, DE_1, DE_2,    DE_3,    DE_PLUS, _______, _______, _______,
   _______, _______, _______, _______, XXXXXXX, DE_0, DE_COMM, KC_ENT,  _______, _______, _______, _______
+),
+
+/* Reset (Lalt + Ralt + Tab + Bksp, in this order)
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      |      | RESET|      |      |      |      |      |      |      |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_RESET] = LAYOUT_planck_grid(
+  _______, _______, _______, _______, RESET  , _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 )
+
 };
 
 uint32_t layer_state_set_user(uint32_t state) {
@@ -142,12 +166,13 @@ uint32_t layer_state_set_user(uint32_t state) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     
+  // activate _NUMPAD
   if (keycode == KC_ESC && biton32(layer_state) == _QWERTZ) {
 	bool is_lalt_active = (keyboard_report->mods & MOD_BIT(KC_LALT));
 	  
     if (is_lalt_active) {
       if (record->event.pressed) {
-          layer_on(_NUMPAD);
+         layer_on(_NUMPAD);
       }
       else {
          layer_off(_NUMPAD);
@@ -155,6 +180,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
      
       return false;
     }
+  }
+  
+  // activate _RESET
+  switch (keycode) {
+    case KC_LALT:
+      reset_is_lalt_pressed = record->event.pressed;
+      return true;	  
+	case DE_ALGR:
+      reset_is_ralt_pressed = reset_is_lalt_pressed && record->event.pressed;
+      return true;	  
+	case KC_TAB:
+      reset_is_tab_pressed = reset_is_ralt_pressed && record->event.pressed;
+      return true;	  
+	case KC_BSPC:
+      if (reset_is_tab_pressed) {
+		  if (record->event.pressed) {
+			  layer_on(_RESET);
+	      }
+		  else {
+              layer_off(_RESET);
+          }
+	  
+		  return false;
+	  }
+	  return true;	  
   }
   
   return true;
