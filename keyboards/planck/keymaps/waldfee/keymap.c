@@ -183,28 +183,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   
   // activate _RESET
-  switch (keycode) {
-    case KC_LALT:
-      reset_is_lalt_pressed = record->event.pressed;
-      return true;	  
-	case DE_ALGR:
-      reset_is_ralt_pressed = reset_is_lalt_pressed && record->event.pressed;
-      return true;	  
-	case KC_TAB:
-      reset_is_tab_pressed = reset_is_ralt_pressed && record->event.pressed;
-      return true;	  
-	case KC_BSPC:
-      if (reset_is_tab_pressed) {
-		  if (record->event.pressed) {
-			  layer_on(_RESET);
-	      }
-		  else {
-              layer_off(_RESET);
-          }
-	  
-		  return false;
-	  }
-	  return true;	  
+  if (biton32(layer_state) == _QWERTZ) {
+     switch (keycode) {
+       case KC_LALT:
+         reset_is_lalt_pressed = record->event.pressed;
+         return true;	  
+	   case DE_ALGR:
+         reset_is_ralt_pressed = reset_is_lalt_pressed && record->event.pressed;
+         return true;	  
+	   case KC_TAB:
+         reset_is_tab_pressed = reset_is_ralt_pressed && record->event.pressed;
+         return true;	  
+	   case KC_BSPC:
+         if (reset_is_tab_pressed) {
+	   	  if (record->event.pressed) {
+	   		  layer_on(_RESET);
+	         }
+	   	  else {
+                 layer_off(_RESET);
+             }
+	     
+	   	  return false;
+	     }
+	     return true;	  
+     }
   }
   
   return true;
