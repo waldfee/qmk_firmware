@@ -5,3 +5,5 @@ UNICODE_ENABLE    = no
 SWAP_HANDS_ENABLE = no
 
 MOUSEKEY_ENABLE   = yes
+
+EXTRAFLAGS        += -flto
