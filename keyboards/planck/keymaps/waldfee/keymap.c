@@ -80,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `---------------------------------------------------------------------------------------------'
    */
   [_LOWER] = LAYOUT_planck_grid(
-    KC_TILD,   _______, _______, _______, DE_EXLM, DE_ACUT, DE_PERC, DE_AMPR, DE_EQL , KC_HOME, KC_PGUP, KC_DEL    ,
+    DE_TILD,   _______, _______, _______, DE_EXLM, DE_ACUT, DE_PERC, DE_AMPR, DE_EQL , KC_HOME, KC_PGUP, KC_DEL    ,
     DE_UNDS,   DE_DQOT, DE_ASTR, DE_SLSH, DE_QST , _______, _______, _______, _______, KC_END , KC_PGDN, DE_MINS   ,
     LSFT_LCBR, _______, _______, _______, _______, DE_BSLS, _______, _______, _______, _______, KC_VOLU, RSFT_RCBR ,
     _______,   _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_MPLY
