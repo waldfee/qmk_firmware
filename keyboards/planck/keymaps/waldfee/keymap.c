@@ -186,42 +186,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       case KC_LALT:
         if (layer == _RESET && !record->event.pressed) {
           layer_off(_RESET);
-  		  return false;
+          return false;
         }
         reset_is_lalt_pressed = record->event.pressed;
         break;
       case DE_ALGR:
         if (layer == _RESET && !record->event.pressed) {
           layer_off(_RESET);
-  		  return false;
+          return false;
         }
         reset_is_ralt_pressed = reset_is_lalt_pressed && record->event.pressed;
         break;
       case KC_TAB:
         if (layer == _RESET && !record->event.pressed) {
           layer_off(_RESET);
-  		  return false;
+          return false;
         }
         reset_is_tab_pressed = reset_is_ralt_pressed && record->event.pressed;
         break;
       case KC_BSPC:
-        if (reset_is_tab_pressed) {
-          if (layer == _QWERTZ && record->event.pressed) {
-            layer_on(_RESET);
-  		    return false;
-          }
-          if (layer == _RESET && !record->event.pressed) {
-            layer_off(_RESET);
-  		    return false;
-          }
+        if (reset_is_tab_pressed && layer == _QWERTZ && record->event.pressed) {
+          layer_on(_RESET);
+          return false;
         }
-  	  break;
+        if (layer == _RESET && !record->event.pressed) {
+          layer_off(_RESET);
+          return false;
+        }
+        break;
     }
   }
   if (layer != _QWERTZ && layer != _RESET) {
     reset_is_lalt_pressed = false;
-	reset_is_ralt_pressed = false;
-	reset_is_tab_pressed = false;
+    reset_is_ralt_pressed = false;
+    reset_is_tab_pressed = false;
   }
 
   return true;
