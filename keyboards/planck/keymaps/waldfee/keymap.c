@@ -165,48 +165,63 @@ uint32_t layer_state_set_user(uint32_t state) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-
+  uint8_t layer = biton32(layer_state);
+  
   // activate _NUMPAD
-  if (keycode == KC_ESC && biton32(layer_state) == _QWERTZ) {
+  if (layer == _QWERTZ || layer == _NUMPAD) {
     bool is_lalt_active = (keyboard_report->mods & MOD_BIT(KC_LALT));
-
-    if (is_lalt_active) {
-      if (record->event.pressed) {
-        layer_on(_NUMPAD);
-      }
-      else {
-        layer_off(_NUMPAD);
-      }
-
+    if (keycode == KC_ESC && is_lalt_active && layer == _QWERTZ && record->event.pressed) {
+      layer_on(_NUMPAD);
+      return false;
+    }
+    if ((keycode == KC_ESC || keycode == KC_LALT) && layer == _NUMPAD && !record->event.pressed) {
+      layer_off(_NUMPAD);
       return false;
     }
   }
 
   // activate _RESET
-  if (biton32(layer_state) == _QWERTZ) {
+  if (layer == _QWERTZ || layer == _RESET) {
     switch (keycode) {
-    case KC_LALT:
-      reset_is_lalt_pressed = record->event.pressed;
-      return true;
-    case DE_ALGR:
-      reset_is_ralt_pressed = reset_is_lalt_pressed && record->event.pressed;
-      return true;
-    case KC_TAB:
-      reset_is_tab_pressed = reset_is_ralt_pressed && record->event.pressed;
-      return true;
-    case KC_BSPC:
-      if (reset_is_tab_pressed) {
-        if (record->event.pressed) {
-          layer_on(_RESET);
-        }
-        else {
+      case KC_LALT:
+        if (layer == _RESET && !record->event.pressed) {
           layer_off(_RESET);
+  		  return false;
         }
-
-        return false;
-      }
-      return true;
+        reset_is_lalt_pressed = record->event.pressed;
+        break;
+      case DE_ALGR:
+        if (layer == _RESET && !record->event.pressed) {
+          layer_off(_RESET);
+  		  return false;
+        }
+        reset_is_ralt_pressed = reset_is_lalt_pressed && record->event.pressed;
+        break;
+      case KC_TAB:
+        if (layer == _RESET && !record->event.pressed) {
+          layer_off(_RESET);
+  		  return false;
+        }
+        reset_is_tab_pressed = reset_is_ralt_pressed && record->event.pressed;
+        break;
+      case KC_BSPC:
+        if (reset_is_tab_pressed) {
+          if (layer == _QWERTZ && record->event.pressed) {
+            layer_on(_RESET);
+  		    return false;
+          }
+          if (layer == _RESET && !record->event.pressed) {
+            layer_off(_RESET);
+  		    return false;
+          }
+        }
+  	  break;
     }
+  }
+  if (layer != _QWERTZ && layer != _RESET) {
+    reset_is_lalt_pressed = false;
+	reset_is_ralt_pressed = false;
+	reset_is_tab_pressed = false;
   }
 
   return true;
