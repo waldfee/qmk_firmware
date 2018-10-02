@@ -74,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_LOWER] = LAYOUT_planck_grid(
     DE_TILD,   _______, _______, _______, DE_EXLM, DE_ACUT, DE_PERC, DE_AMPR, DE_EQL , KC_HOME, KC_PGUP, KC_DEL    ,
     DE_UNDS,   DE_DQOT, DE_ASTR, DE_SLSH, DE_QST , _______, _______, _______, _______, KC_END , KC_PGDN, DE_MINS   ,
-    KC_LSFT,   _______, _______, _______, _______, DE_BSLS, _______, _______, _______, _______, KC_VOLU, KC_RSFT ,
+    _______,   _______, _______, _______, _______, DE_BSLS, _______, _______, _______, _______, KC_VOLU, _______ ,
     _______,   DE_CIRC, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_MPLY
   ),
 
@@ -92,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_RAISE] = LAYOUT_planck_grid(
     KC_F1,     KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12    ,
     KC_1,      KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______, _______   ,
-    KC_LSFT,   DE_LPRN, DE_RPRN, DE_LCBR, DE_RCBR, DE_LBRC, DE_RBRC, _______, _______, _______, _______, KC_RSFT ,
+    _______,   DE_LPRN, DE_RPRN, DE_LCBR, DE_RCBR, DE_LBRC, DE_RBRC, _______, _______, _______, _______, _______ ,
     _______,   KC_APP,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
   ), 
 
