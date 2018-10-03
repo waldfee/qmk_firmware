@@ -128,10 +128,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `-----------------------------------------------------------------------------------'
    */
   [_NUMPAD] = LAYOUT_planck_grid(
-    _______, _______, _______, _______, _______, DE_7, DE_8,    DE_9,    DE_EQL,  _______, KC_PSCR, KC_INSERT,
-    _______, _______, _______, _______, _______, DE_4, DE_5,    DE_6,    DE_MINS, _______, _______, KC_PAUSE ,
-    _______, _______, _______, _______, _______, DE_1, DE_2,    DE_3,    DE_PLUS, _______, _______, _______  ,
-    _______, _______, _______, _______, XXXXXXX, DE_0, DE_COMM, KC_ENT,  _______, _______, _______, _______
+    _______, _______, _______, _______, _______, KC_KP_7, KC_KP_8,   KC_KP_9,      DE_EQL,  _______, KC_PSCR, KC_INSERT,
+    _______, _______, _______, _______, _______, KC_KP_4, KC_KP_5,   KC_KP_6,      DE_MINS, _______, _______, KC_PAUSE ,
+    _______, _______, _______, _______, _______, KC_KP_1, KC_KP_2,   KC_KP_3,      DE_PLUS, _______, _______, _______  ,
+    _______, _______, _______, _______, XXXXXXX, KC_KP_0, KC_KP_DOT, KC_KP_ENTER,  _______, _______, _______, _______
   ),
 
   /* Reset (Lalt + LSHFT + Tab + Bksp, in this order)
@@ -156,6 +156,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 uint32_t layer_state_set_user(uint32_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _UMLAUT);
+}
+
+void matrix_init_user (void) {
+  if (!(host_keyboard_leds() & (1<<USB_LED_NUM_LOCK))) {
+      register_code(KC_NUMLOCK);
+      unregister_code(KC_NUMLOCK);
+  }
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
