@@ -1,4 +1,4 @@
-/* Copyright 2018 MechMerlin
+/* Copyright 2018 darm
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,28 +13,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef MACROPAD_H
-#define MACROPAD_H
 
-#include "quantum.h"
+#pragma once
 
-/* This a shortcut to help you visually see your layout.
- *
- * The first section contains all of the arguments representing the physical
- * layout of the board and position of the keys.
- *
- * The second converts the arguments into a two-dimensional array which
- * represents the switch matrix.
- */
-#define LAYOUT(    \
-    K00, K01, K02, \
-    K10, K11, K12, \
-    K20, K21, K22  \
-) \
-{ \
-    { K00, K01, K02 }, \
-    { K10, K11, K12 }, \
-    { K20, K21, K22 }, \
-}
-
-#endif
+#define MOUSEKEY_DELAY             0
+#define MOUSEKEY_INTERVAL          16
+#define MOUSEKEY_MAX_SPEED         7
+#define MOUSEKEY_TIME_TO_MAX       60
+#define MOUSEKEY_WHEEL_MAX_SPEED   8
+#define MOUSEKEY_WHEEL_TIME_TO_MAX 40
+#define MOUSEKEY_WHEEL_DELAY 0

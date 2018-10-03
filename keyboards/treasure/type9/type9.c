@@ -1,4 +1,4 @@
-/* Copyright 2018 Jarred Steenvoorden
+/* Copyright 2018 MechMerlin
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,25 +13,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include "type9.h"
 
-#ifndef CONFIG_USER_H
-#define CONFIG_USER_H
+void matrix_init_kb(void) {
+	// put your keyboard start-up code here
+	// runs once when the firmware starts up
 
-#include "config_common.h"
+	matrix_init_user();
+}
 
-#ifdef AUDIO_ENABLE
-    #define STARTUP_SONG SONG(PLANCK_SOUND)
-#endif
+void matrix_scan_kb(void) {
+	// put your looping keyboard code here
+	// runs every cycle (a lot)
 
-#define TAPPING_TERM    200
+	matrix_scan_user();
+}
 
-#define MOUSEKEY_DELAY 0
-#define MOUSEKEY_INTERVAL 16
-#define MOUSEKEY_TIME_TO_MAX 40
-#define MOUSEKEY_MAX_SPEED 5
+bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
+	// put your per-action keyboard code here
+	// runs for every action, just before processing by the firmware
 
-#define MOUSEKEY_WHEEL_DELAY 0
-#define MOUSEKEY_WHEEL_MAX_SPEED   4
-#define MOUSEKEY_WHEEL_TIME_TO_MAX 255
+	return process_record_user(keycode, record);
+}
 
-#endif
+void led_set_kb(uint8_t usb_led) {
+	// put your keyboard LED indicator (ex: Caps Lock LED) toggling code here
+
+	led_set_user(usb_led);
+}
