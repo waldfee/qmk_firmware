@@ -159,6 +159,8 @@ uint32_t layer_state_set_user(uint32_t state) {
 }
 
 void matrix_init_user (void) {
+	
+  // on power on turn numlock on
   if (!(host_keyboard_leds() & (1<<USB_LED_NUM_LOCK))) {
       register_code(KC_NUMLOCK);
       unregister_code(KC_NUMLOCK);
