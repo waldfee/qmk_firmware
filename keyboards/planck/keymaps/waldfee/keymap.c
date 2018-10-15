@@ -52,14 +52,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |-----------+------+------+------+------+------+------+------+------+------+------+-----------|
    * | Shift     |   Y  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |  Up  | Shift     |
    * |-----------+------+------+------+------+------+------+------+------+------+------+-----------|
-   * | Ctrl      |  GUI |  Alt |   <  |Lower |  Spc |  Ent |Raise |NUMPAD| Left | Down | Right     |
+   * | Ctrl      |  GUI |  Alt |   <  |Lower |  Spc |Raise | Enter|NUMPAD| Left | Down | Right     |
    * `---------------------------------------------------------------------------------------------'
    */
   [_QWERTZ] = LAYOUT_planck_grid(
     KC_GESC,   DE_Q,    DE_W,    DE_E,    DE_R,    DE_T,    DE_Z,    DE_U,    DE_I,    DE_O,    DE_P,    KC_BSPC   ,
     KC_TAB,    DE_A,    DE_S,    DE_D,    DE_F,    DE_G,    DE_H,    DE_J,    DE_K,    DE_L,    DE_HASH, DE_PLUS   ,
     KC_LSFT,   DE_Y,    DE_X,    DE_C,    DE_V,    DE_B,    DE_N,    DE_M,    KC_COMM, KC_DOT,  KC_UP,   KC_RSFT   ,
-    KC_LCTL,   KC_LGUI, KC_LALT, DE_LESS, LOWER,   KC_SPC,  KC_ENT,  RAISE,   NUMPAD , KC_LEFT, KC_DOWN, KC_RGHT
+    KC_LCTL,   KC_LGUI, KC_LALT, DE_LESS, LOWER,   KC_SPC,  RAISE,  KC_ENT,   NUMPAD , KC_LEFT, KC_DOWN, KC_RGHT
   ),
 
   /* Lower
