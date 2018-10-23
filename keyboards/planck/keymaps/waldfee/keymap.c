@@ -52,14 +52,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |-----------+------+------+------+------+------+------+------+------+------+------+-----------|
    * | Shift     |   Y  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |  Up  | Shift     |
    * |-----------+------+------+------+------+------+------+------+------+------+------+-----------|
-   * | Ctrl      |  GUI |  Alt |   <  |Lower |  Spc |Raise | Enter|NUMPAD| Left | Down | Right     |
+   * | Ctrl      |  GUI |  Alt |Lower |  Spc |  <   |Raise | Enter|NUMPAD| Left | Down | Right     |
    * `---------------------------------------------------------------------------------------------'
    */
   [_QWERTZ] = LAYOUT_planck_grid(
     KC_GESC,   DE_Q,    DE_W,    DE_E,    DE_R,    DE_T,    DE_Z,    DE_U,    DE_I,    DE_O,    DE_P,    KC_BSPC   ,
     KC_TAB,    DE_A,    DE_S,    DE_D,    DE_F,    DE_G,    DE_H,    DE_J,    DE_K,    DE_L,    DE_HASH, DE_PLUS   ,
     KC_LSFT,   DE_Y,    DE_X,    DE_C,    DE_V,    DE_B,    DE_N,    DE_M,    KC_COMM, KC_DOT,  KC_UP,   KC_RSFT   ,
-    KC_LCTL,   KC_LGUI, KC_LALT, DE_LESS, LOWER,   KC_SPC,  RAISE,  KC_ENT,   NUMPAD , KC_LEFT, KC_DOWN, KC_RGHT
+    KC_LCTL,   KC_LGUI, KC_LALT, LOWER, KC_SPC,   DE_LESS,  RAISE,  KC_ENT,   NUMPAD , KC_LEFT, KC_DOWN, KC_RGHT
   ),
 
   /* Lower
@@ -131,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, KC_KP_7, KC_KP_8,   KC_KP_9,      DE_EQL,  _______, KC_PSCR, KC_INSERT,
     _______, _______, _______, _______, _______, KC_KP_4, KC_KP_5,   KC_KP_6,      DE_MINS, _______, _______, KC_PAUSE ,
     _______, _______, _______, _______, _______, KC_KP_1, KC_KP_2,   KC_KP_3,      DE_PLUS, _______, _______, _______  ,
-    _______, _______, _______, _______, XXXXXXX, KC_KP_0, KC_KP_DOT, KC_KP_ENTER,  _______, _______, _______, _______
+    _______, _______, _______, _______, _______, KC_KP_0, KC_KP_DOT, KC_KP_ENTER,  _______, _______, _______, _______
   ),
 
   /* Reset (Lalt + LSHFT + Tab + Bksp, in this order)
