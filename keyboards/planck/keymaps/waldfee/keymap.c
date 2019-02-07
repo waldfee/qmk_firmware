@@ -50,16 +50,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |-----------+------+------+------+------+-------------+------+------+------+------+-----------|
    * | Tab       |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   #  |   +       |
    * |-----------+------+------+------+------+------+------+------+------+------+------+-----------|
-   * | Shift     |   Y  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |  Up  | Shift     |
+   * | Shift     |   Y  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |  Up  |   <       |
    * |-----------+------+------+------+------+------+------+------+------+------+------+-----------|
-   * | Ctrl      |  GUI |  Alt |Lower |  Spc |  <   |Raise | Enter|NUMPAD| Left | Down | Right     |
+   * | Ctrl      |  GUI |  Alt |Lower |  Spc | Shift|Raise | Enter|NUMPAD| Left | Down | Right     |
    * `---------------------------------------------------------------------------------------------'
    */
   [_QWERTZ] = LAYOUT_planck_grid(
     KC_GESC,   DE_Q,    DE_W,    DE_E,    DE_R,    DE_T,    DE_Z,    DE_U,    DE_I,    DE_O,    DE_P,    KC_BSPC   ,
     KC_TAB,    DE_A,    DE_S,    DE_D,    DE_F,    DE_G,    DE_H,    DE_J,    DE_K,    DE_L,    DE_HASH, DE_PLUS   ,
-    KC_LSFT,   DE_Y,    DE_X,    DE_C,    DE_V,    DE_B,    DE_N,    DE_M,    KC_COMM, KC_DOT,  KC_UP,   KC_RSFT   ,
-    KC_LCTL,   KC_LGUI, KC_LALT, LOWER, KC_SPC,   DE_LESS,  RAISE,  KC_ENT,   NUMPAD , KC_LEFT, KC_DOWN, KC_RGHT
+    KC_LSFT,   DE_Y,    DE_X,    DE_C,    DE_V,    DE_B,    DE_N,    DE_M,    KC_COMM, KC_DOT,  KC_UP,   DE_LESS   ,
+    KC_LCTL,   KC_LGUI, KC_LALT, LOWER, KC_SPC,   KC_RSFT,  RAISE,  KC_ENT,   NUMPAD , KC_LEFT, KC_DOWN, KC_RGHT
   ),
 
   /* Lower
