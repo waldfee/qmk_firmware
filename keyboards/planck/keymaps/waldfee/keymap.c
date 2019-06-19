@@ -30,6 +30,8 @@ enum planck_layers {
   _RAISE,
   _UMLAUT,
   _NUMPAD,
+  _OPEN_BRACKETS,
+  _CLOSE_BRACKETS,
   _RESET
 };
 
@@ -37,10 +39,10 @@ enum planck_layers {
 #define XXXXXXX KC_NO
 
 #define LOWER MO(_LOWER)
-
 #define RAISE MO(_RAISE)
-
 #define NUMPAD MO(_NUMPAD)
+#define OPEN_BRACKETS MO(_OPEN_BRACKETS)
+#define CLOSE_BRACKETS MO(_CLOSE_BRACKETS)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -52,14 +54,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |-----------+------+------+------+------+------+------+------+------+------+------+-----------|
    * | Shift     |   Y  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |  Up  |   <       |
    * |-----------+------+------+------+------+------+------+------+------+------+------+-----------|
-   * | Ctrl      |  GUI |  Alt |Lower |  Spc | Shift|Raise | Enter|NUMPAD| Left | Down | Right     |
+   * | Ctrl      |  GUI |  Alt |Lower |  Spc | OPE B|Enter |Raise |NUMPAD| Left | Down | Right     |
    * `---------------------------------------------------------------------------------------------'
    */
   [_QWERTZ] = LAYOUT_planck_grid(
     KC_GESC,   DE_Q,    DE_W,    DE_E,    DE_R,    DE_T,    DE_Z,    DE_U,    DE_I,    DE_O,    DE_P,    KC_BSPC   ,
     KC_TAB,    DE_A,    DE_S,    DE_D,    DE_F,    DE_G,    DE_H,    DE_J,    DE_K,    DE_L,    DE_HASH, DE_PLUS   ,
     KC_LSFT,   DE_Y,    DE_X,    DE_C,    DE_V,    DE_B,    DE_N,    DE_M,    KC_COMM, KC_DOT,  KC_UP,   DE_LESS   ,
-    KC_LCTL,   KC_LGUI, KC_LALT, LOWER, KC_SPC,   KC_RSFT,  RAISE,  KC_ENT,   NUMPAD , KC_LEFT, KC_DOWN, KC_RGHT
+    KC_LCTL,   KC_LGUI, KC_LALT, LOWER, KC_SPC,   OPEN_BRACKETS,  KC_ENT,  RAISE,   NUMPAD , KC_LEFT, KC_DOWN, KC_RGHT
   ),
 
   /* Lower
@@ -134,6 +136,42 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, KC_KP_0, KC_KP_DOT, KC_KP_ENTER,  _______, _______, _______, _______
   ),
 
+  /* Open Brackets
+   * ,-----------------------------------------------------------------------------------.
+   * |      |      |      |   [  |   (  |      |      |      |      |      |      |      |
+   * |------+------+------+------+------+-------------+------+------+------+------+------|
+   * |      |      |      |      |      |   {  |      |      |      |      |      |      |
+   * |------+------+------+------+------+------|------+------+------+------+------+------|
+   * |      |      |      |      |      |      |      |      |      |      |      |      |
+   * |------+------+------+------+------+------+------+------+------+------+------+------|
+   * |      |      |      |      |      |      |      |      |      |      |      |      |
+   * `-----------------------------------------------------------------------------------'
+   */
+  [_OPEN_BRACKETS] = LAYOUT_planck_grid(
+    _______, _______, _______, DE_LBRC, DE_LPRN, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, DE_LCBR, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+  ),
+
+    /* Closing Brackets
+   * ,-----------------------------------------------------------------------------------.
+   * |      |      |      |   ]  |   )  |      |      |      |      |      |      |      |
+   * |------+------+------+------+------+-------------+------+------+------+------+------|
+   * |      |      |      |      |      |   }  |      |      |      |      |      |      |
+   * |------+------+------+------+------+------|------+------+------+------+------+------|
+   * |      |      |      |      |      |      |      |      |      |      |      |      |
+   * |------+------+------+------+------+------+------+------+------+------+------+------|
+   * |      |      |      |      |      |      |      |      |      |      |      |      |
+   * `-----------------------------------------------------------------------------------'
+   */
+  [_CLOSE_BRACKETS] = LAYOUT_planck_grid(
+    _______, _______, _______, DE_RBRC, DE_RPRN, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, DE_RCBR, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+  ),
+
   /* Reset (Lalt + LSHFT + Tab + Bksp, in this order)
    * ,-----------------------------------------------------------------------------------.
    * |      |      |      |      | RESET|      |      |      |      |      |      |      |
@@ -155,7 +193,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 uint32_t layer_state_set_user(uint32_t state) {
-  return update_tri_layer_state(state, _LOWER, _RAISE, _UMLAUT);
+  state = update_tri_layer_state(state, _LOWER, _RAISE, _UMLAUT);
+  state = update_tri_layer_state(state, _OPEN_BRACKETS, _LOWER, _CLOSE_BRACKETS);
+  return state;
 }
 
 void matrix_init_user (void) {
