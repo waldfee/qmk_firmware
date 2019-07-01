@@ -194,7 +194,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 uint32_t layer_state_set_user(uint32_t state) {
   state = update_tri_layer_state(state, _LOWER, _RAISE, _UMLAUT);
-  state = update_tri_layer_state(state, _OPEN_BRACKETS, _LOWER, _CLOSE_BRACKETS);
+  state = update_tri_layer_state(state, _OPEN_BRACKETS, _RAISE, _CLOSE_BRACKETS);
   return state;
 }
 
